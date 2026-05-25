@@ -1,0 +1,44 @@
+# ─── Core ────────────────────────────────────────────────────────────────────
+numpy>=1.24,<2.0
+pandas>=2.0
+scikit-learn>=1.3
+joblib>=1.3
+
+# ─── Data ────────────────────────────────────────────────────────────────────
+yfinance>=0.2.40
+pyarrow>=14.0          # for parquet caching
+requests>=2.31
+
+# ─── Deep learning ────────────────────────────────────────────────────────────
+tensorflow>=2.14       # also installs keras
+
+# ─── Gradient boosting ───────────────────────────────────────────────────────
+lightgbm>=4.1
+
+# ─── Hyperparameter tuning ───────────────────────────────────────────────────
+optuna>=3.4
+
+# ─── Visualisation & app ─────────────────────────────────────────────────────
+streamlit>=1.32
+matplotlib>=3.7
+python-dotenv>=1.0     # FIX: required by app.py (from dotenv import load_dotenv)
+
+# ─── Sentiment (add all three; the code picks the best available) ─────────
+transformers>=4.38          # FinBERT via HuggingFace (best quality)
+torch>=2.0                  # required by transformers for CPU inference
+nltk>=3.8                   # VADER fallback (lightweight, no GPU needed)
+textblob>=0.18              # TextBlob fallback (trivial install)
+newsapi-python>=0.2.7       # optional NewsAPI client (needs free API key)
+beautifulsoup4>=4.12        # already likely installed; used by market_calendar.py
+
+# MINIMUM VIABLE INSTALL (no GPU, no API key needed):
+#   pip install nltk textblob python-dotenv
+#   python -c "import nltk; nltk.download('vader_lexicon')"
+#
+# RECOMMENDED INSTALL (best accuracy):
+#   pip install transformers torch nltk python-dotenv
+#
+# WITH NewsAPI (richer historical headlines, free tier):
+#   1. Register at https://newsapi.org → get free API key
+#   2. export NEWSAPI_KEY=your_key_here
+#   3. The code auto-detects the env var and uses it
